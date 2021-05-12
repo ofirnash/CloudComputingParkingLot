@@ -15,7 +15,7 @@ let setToRedis = promisify(client.set).bind(client)
 let getFromRedis = promisify(client.get).bind(client)
 
 //entry
-app.post('/entry/:plate/:parkingLot', (req,res,next) =>{
+app.post('/entry/:plate/:parkingLot', async (req,res,next) =>{
     let plate = req.params.plate;
     let parkingLot = req.params.parkingLot;
     let ticketId = await getFromRedis('nextTicketId')
@@ -37,7 +37,7 @@ app.post('/entry/:plate/:parkingLot', (req,res,next) =>{
 });
 
 //exit
-app.post('/exit/:ticketId', (req,res,next) => {
+app.post('/exit/:ticketId', async (req,res,next) => {
     let ticketId = req.params.ticketId
     let parkingCarData = await getFromRedis(ticketId)
 
